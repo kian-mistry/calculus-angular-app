@@ -1,6 +1,6 @@
 <div id="main">
 	<md-toolbar color="primary">
-		<button md-icon-button>
+		<button md-icon-button *ngIf="windowWidth < smDevice" (click)="sidenav.toggle()">
 			<md-icon>menu</md-icon>
 		</button>
 		<span>Interactive Calculus</span>
@@ -8,6 +8,12 @@
 	<md-sidenav-container>
 		<md-sidenav #sidenav>
 			<!-- Sidenav Content -->
+			<md-nav-list>
+				<a md-list-item #navItem *ngFor="let item of navItems">
+					<md-icon md-list-icon>{{ item.icon }}</md-icon>
+					<span md-line>{{ item.name }}</span>
+				</a>
+			</md-nav-list>
 		</md-sidenav>
 		<div id="main-content">
 			<!-- Main Content -->
