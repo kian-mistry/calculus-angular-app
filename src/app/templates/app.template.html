@@ -1,3 +1,17 @@
-<h1>
-	{{title}}
-</h1>
+<div id="main">
+	<md-toolbar color="primary">
+		<button md-icon-button>
+			<md-icon>menu</md-icon>
+		</button>
+		<span>Interactive Calculus</span>
+	</md-toolbar>
+	<md-sidenav-container>
+		<md-sidenav #sidenav>
+			<!-- Sidenav Content -->
+		</md-sidenav>
+		<div id="main-content">
+			<!-- Main Content -->
+			{{ title }}
+		</div>
+	</md-sidenav-container>
+</div>
