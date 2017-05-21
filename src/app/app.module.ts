@@ -15,12 +15,15 @@ import { HomeComponent } from './components/home.component';
 import { DifferentiationComponent } from './components/differentiation.component';
 import { IntegrationComponent } from './components/integration.component';
 
+import { DifferentiationRulesComponent } from './components/differentiation/differentiation-rules.component';
+
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
 		DifferentiationComponent,
-		IntegrationComponent
+		IntegrationComponent,
+		DifferentiationRulesComponent
 	],
 	imports: [
 		AppRoutingModule,

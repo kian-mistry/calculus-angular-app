@@ -1,0 +1,26 @@
+<div class="flex-container" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="2%" fxLayoutWrap="none">
+	<div class="flex-item" *ngFor="let diffRule of diffRules">
+		<md-card>
+			<md-card-title>{{ diffRule.name }}</md-card-title>
+			<md-card-content>
+				<span>{{ diffRule.rule }}</span>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div class="flex-item">
+		<md-card>
+			<md-card-title>Exponentials and Logarithms</md-card-title>
+			<md-card-content>
+				<span *ngFor="let expLogRule of diffExpLogRules">{{ expLogRule.rule }}</span>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div class="flex-item">
+		<md-card>
+			<md-card-title>Trigonometric Functions</md-card-title>
+			<md-card-content>
+				<span *ngFor="let trigRule of diffTrigRules">{{ trigRule.rule }}</span>
+			</md-card-content>
+		</md-card>
+	</div>
+</div>
