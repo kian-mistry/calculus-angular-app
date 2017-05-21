@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
 	templateUrl: '../templates/integration.template.html'
 })
 export class IntegrationComponent {
-	private title: string = 'Integration';
+	public title: string = 'Integration';
 }

@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
 	templateUrl: '../templates/home.template.html'
 })
 export class HomeComponent {
-	private title: string = 'Home';
+	public title: string = 'Home';
 }

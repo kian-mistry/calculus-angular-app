@@ -4,9 +4,9 @@ import { MdSidenav } from '@angular/material';
 import { Devices } from '../../constants/devices';
 
 export class OnSidenavListener {
-	private readonly smDevice = Devices.SM_DEVICE;
+	public readonly smDevice = Devices.SM_DEVICE;
 
-	private windowWidth: number;
+	public windowWidth: number;
 
 	//Attribute a HTML element with the tag #sidenav to a variable.
 	@ViewChild('sidenav') private sidenav: MdSidenav;

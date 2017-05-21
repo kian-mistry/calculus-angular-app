@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
 	templateUrl: '../templates/differentiation.template.html'
 })
 export class DifferentiationComponent {
-	private title: string = 'Differentiation';
+	public title: string = 'Differentiation';
 }
