@@ -1,0 +1,20 @@
+//Returns the power given the base and exponent.
+@function power($base, $exponent) {
+	$value: 1;
+
+	@if($exponent > 0) {
+		@for $i from 1 through $exponent {
+			$value: $value * $base;
+		}
+	}
+
+	@return $value;
+}
+
+@for $i from 1 through 4 {
+	$n: power(2, $i);
+
+	.padding-#{$n} {
+		padding: #{$n}px;
+	}
+}

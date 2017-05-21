@@ -1,1 +1,12 @@
-<h1>{{ title }}</h1>
+<md-tab-group colour="primary" md-stretch-tabs="always">
+	<md-tab label="{{ title | uppercase }}">
+		<div class="padding-16">
+			{{ title }}
+		</div>
+	</md-tab>
+	<md-tab label="{{ 'Rules' | uppercase }}">
+		<div class="padding-16">
+			Rules
+		</div>
+	</md-tab>
+</md-tab-group>
