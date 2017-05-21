@@ -3,7 +3,7 @@
 		<md-card>
 			<md-card-title>{{ diffRule.name }}</md-card-title>
 			<md-card-content>
-				<span>{{ diffRule.rule }}</span>
+				<span [mathJax]="diffRule.rule"></span>
 			</md-card-content>
 		</md-card>
 	</div>
@@ -11,7 +11,7 @@
 		<md-card>
 			<md-card-title>Exponentials and Logarithms</md-card-title>
 			<md-card-content>
-				<span *ngFor="let expLogRule of diffExpLogRules">{{ expLogRule.rule }}</span>
+				<span *ngFor="let expLogRule of diffExpLogRules" [mathJax]="expLogRule.rule"></span>
 			</md-card-content>
 		</md-card>
 	</div>
@@ -19,7 +19,7 @@
 		<md-card>
 			<md-card-title>Trigonometric Functions</md-card-title>
 			<md-card-content>
-				<span *ngFor="let trigRule of diffTrigRules">{{ trigRule.rule }}</span>
+				<span *ngFor="let trigRule of diffTrigRules" [mathJax]="trigRule.rule"></span>
 			</md-card-content>
 		</md-card>
 	</div>

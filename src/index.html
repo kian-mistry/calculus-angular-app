@@ -11,6 +11,33 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+	<!-- MathJax -->
+	<script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+			messageStyle: "none",
+			"HTML-CSS": {
+				showMathMenu: false
+			},
+			displayAlign: "center",
+			menuSettings: {
+				zoom: "Double-Click",
+				mpContext: true,
+				mpMouse: true
+			},
+			errorSettings: {
+				message: ['Maths Error']
+			},
+			tex2jax: {
+				inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+				displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+				processEscapes: true
+			}
+		});
+
+		MathJax.Hub.Configured();
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 	<app-root>Loading...</app-root>

@@ -17,13 +17,16 @@ import { IntegrationComponent } from './components/integration.component';
 
 import { DifferentiationRulesComponent } from './components/differentiation/differentiation-rules.component';
 
+import { MathJaxDirective } from './directives/mathjax.directive';
+
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
 		DifferentiationComponent,
 		IntegrationComponent,
-		DifferentiationRulesComponent
+		DifferentiationRulesComponent,
+		MathJaxDirective
 	],
 	imports: [
 		AppRoutingModule,
