@@ -8,13 +8,22 @@ import { NgModule } from '@angular/core';
 
 import 'hammerjs';
 
+import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './components/app.component';
+import { HomeComponent } from './components/home.component';
+import { DifferentiationComponent } from './components/differentiation.component';
+import { IntegrationComponent } from './components/integration.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		HomeComponent,
+		DifferentiationComponent,
+		IntegrationComponent
 	],
 	imports: [
+		AppRoutingModule,
 		BrowserAnimationsModule,
 		BrowserModule,
 		FlexLayoutModule,

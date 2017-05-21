@@ -33,4 +33,14 @@ export class OnSidenavListener {
 			}
 		}
 	}
+
+	/**
+	 * Closes the sidenav if it is less than the specified width.
+	 * @param deviceWidth The width of the device.
+	 */
+	private closeSidenav(deviceWidth): void {
+		if(this.windowWidth < deviceWidth) {
+			this.sidenav.close();
+		}
+	}
 } 

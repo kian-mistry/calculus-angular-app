@@ -13,7 +13,4 @@ export class AppComponent extends OnSidenavListener {
 		{icon: 'show_chart', name: 'Differentiation', link: 'differentiation'},
 		{icon: 'insert_chart', name: 'Integration', link: 'integration'}
 	];
-
-	title = 'app works!';
-
 }
