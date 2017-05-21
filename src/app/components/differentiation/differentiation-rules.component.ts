@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { CalculusRules, IRules } from '../../constants/calculus-rules';
-import { MathJaxConstants } from '../../constants/mathjax';
 
 @Component({
 	selector: 'diff-rules',

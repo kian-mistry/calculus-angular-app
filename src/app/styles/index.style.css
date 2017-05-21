@@ -2,3 +2,11 @@
 * {
 	font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
+
+/* Allow to scroll through content on the tab body. */
+md-tab-body {
+	position: fixed !important; /* Fixes the position of the tabs. */
+	min-height: 0 !important;
+	top: 48px !important; /* Offset by the size of the tabs. */
+	height: calc(100% - 112px) !important; /* Shows the bottom of the contents. */
+}
