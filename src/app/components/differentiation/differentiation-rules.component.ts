@@ -8,7 +8,8 @@ import { CalculusRules, IRules } from '../../constants/calculus-rules';
 })
 export class DifferentiationRulesComponent {
 	public readonly diffRules: IRules[] = [
-		{ name: 'The Constant Rule', rule: CalculusRules.diffConstants },
+		{ name: 'Constants', rule: CalculusRules.diffConstants },
+		{ name: 'Coefficients', rule: CalculusRules.diffCoefficients },
 		{ name: 'The Power Rule', rule: CalculusRules.diffPowerRule },
 		{ name: 'The Product Rule', rule: CalculusRules.diffProductRule },
 		{ name: 'The Quotient Rule', rule: CalculusRules.diffQuotientRule },

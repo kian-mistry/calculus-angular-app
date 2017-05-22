@@ -1,0 +1,26 @@
+<div class="flex-container" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="2%" fxLayoutWrap="none">
+	<div class="flex-item" *ngFor="let intRule of intRules">
+		<md-card>
+			<md-card-title>{{ intRule.name }}</md-card-title>
+			<md-card-content>
+				<span [mathJax]="intRule.rule"></span>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div class="flex-item">
+		<md-card>
+			<md-card-title>Exponentials and Logarithms</md-card-title>
+			<md-card-content>
+				<span *ngFor="let expLogRule of intExpLogRules" [mathJax]="expLogRule.rule"></span>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div class="flex-item">
+		<md-card>
+			<md-card-title>Trigonometric Functions</md-card-title>
+			<md-card-content>
+				<span *ngFor="let trigRule of intTrigRules" [mathJax]="trigRule.rule"></span>
+			</md-card-content>
+		</md-card>
+	</div>
+</div>
