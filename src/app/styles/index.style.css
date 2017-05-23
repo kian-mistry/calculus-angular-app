@@ -3,6 +3,10 @@
 	font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+.third-width {
+	width: 33%;
+}
+
 .full-width {
 	width: 100%;
 }

@@ -16,6 +16,7 @@ import { DifferentiationComponent } from './components/differentiation.component
 import { IntegrationComponent } from './components/integration.component';
 
 import { DifferentiationDashboardComponent } from './components/differentiation/differentiation-dash.component';
+import { IntegrationDashboardComponent } from './components/integration/integration-dash.component';
 
 import { DifferentiationRulesComponent } from './components/differentiation/differentiation-rules.component';
 import { IntegrationRulesComponent } from './components/integration/integration-rules.component';
@@ -27,9 +28,10 @@ import { MathJaxDirective } from './directives/mathjax.directive';
 		AppComponent,
 		HomeComponent,
 		DifferentiationComponent,
-		IntegrationComponent,
 		DifferentiationDashboardComponent,
 		DifferentiationRulesComponent,
+		IntegrationComponent,
+		IntegrationDashboardComponent,
 		IntegrationRulesComponent,
 		MathJaxDirective
 	],

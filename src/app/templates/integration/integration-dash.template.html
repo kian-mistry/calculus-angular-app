@@ -1,0 +1,42 @@
+<div class="flex-container" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="2%" fxLayoutWrap="none">
+	<div class="flex-item">
+		<md-card>
+			<md-card-title>Expression</md-card-title>
+			<md-card-content id="diff-form" class="flex-container" fxLayout="row" fxLayout.xs="column">
+				<section class="flex-item" fxFlex="50%" fxFlex.xs="100%">
+					<md-select class="padding-8" color="accent" [(ngModel)]="selectedVariable" placeholder="Variable">
+						<md-option *ngFor="let variable of variables" [value]="variable">{{ variable }}</md-option>
+					</md-select>
+					<div class="padding-8 full-width">
+						<md-input-container class="third-width" color="accent">
+							<input mdInput #lowerLimit placeholder="Lower Limit">
+						</md-input-container>
+						<md-input-container class="third-width" color="accent">
+							<input mdInput #upperLimit placeholder="Upper Limit">
+						</md-input-container>
+					</div>
+					<md-input-container class="padding-8 full-width" color="accent">
+						<input mdInput #exprString placeholder="Expression">
+					</md-input-container>
+				</section>
+				<section class="flex-item" fxFlex="50%" fxFlex.xs="100%">
+					<div class="padding-8 full-width" *ngIf="lowerLimit.value == '' || upperLimit.value == ''; then mj else mjLims"></div>
+					<ng-template #mj>
+						<span *ngIf="exprString.value != ''" [mathJax]="'$$\\int_{}^{}{' + exprString.value + '} \\cdot d' + selectedVariable + '$$'"></span>
+					</ng-template>
+					<ng-template #mjLims>
+						<span *ngIf="exprString.value != ''" [mathJax]="'$$\\int_{' + lowerLimit.value + '}^{' + upperLimit.value + '}{' + exprString.value + '} \\cdot d' + selectedVariable + '$$'"></span>
+					</ng-template>
+				</section>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div class="flex-item">
+		<md-card>
+			<md-card-title>Graph</md-card-title>
+			<md-card-content>
+				<canvas class="graph"></canvas>
+			</md-card-content>
+		</md-card>
+	</div>
+</div>
