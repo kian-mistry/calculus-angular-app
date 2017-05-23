@@ -15,6 +15,8 @@ import { HomeComponent } from './components/home.component';
 import { DifferentiationComponent } from './components/differentiation.component';
 import { IntegrationComponent } from './components/integration.component';
 
+import { DifferentiationDashboardComponent } from './components/differentiation/differentiation-dash.component';
+
 import { DifferentiationRulesComponent } from './components/differentiation/differentiation-rules.component';
 import { IntegrationRulesComponent } from './components/integration/integration-rules.component';
 
@@ -26,6 +28,7 @@ import { MathJaxDirective } from './directives/mathjax.directive';
 		HomeComponent,
 		DifferentiationComponent,
 		IntegrationComponent,
+		DifferentiationDashboardComponent,
 		DifferentiationRulesComponent,
 		IntegrationRulesComponent,
 		MathJaxDirective

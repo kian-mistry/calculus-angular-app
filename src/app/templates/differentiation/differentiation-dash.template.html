@@ -1,0 +1,30 @@
+<div class="flex-container" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="2%" fxLayoutWrap="none">
+	<div class="flex-item">
+		<md-card>
+			<md-card-title>Expression</md-card-title>
+			<md-card-content id="diff-form" class="flex-container" fxLayout="row" fxLayout.xs="column">
+				<section class="flex-item" fxFlex="50%" fxFlex.xs="100%">
+					<md-select class="padding-8" color="accent" [(ngModel)]="selectedVariable" placeholder="Variable">
+						<md-option *ngFor="let variable of variables" [value]="variable">{{ variable }}</md-option>
+					</md-select>
+					<md-input-container class="padding-8 full-width" color="accent">
+						<input mdInput #exprString placeholder="Expression">
+					</md-input-container>
+				</section>
+				<section class="flex-item" fxFlex="50%" fxFlex.xs="100%">
+					<div class="padding-8 full-width">
+						<span *ngIf="exprString.value != ''" [mathJax]="'$$\\frac{d}{d' + selectedVariable + '} \\ ' + exprString.value + '$$'"></span>
+					</div>
+				</section>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div class="flex-item">
+		<md-card>
+			<md-card-title>Graph</md-card-title>
+			<md-card-content>
+				<canvas class="graph"></canvas>
+			</md-card-content>
+		</md-card>
+	</div>
+</div>
