@@ -1,6 +1,7 @@
 import { Queue, Stack } from 'typescript-collections';
 
-import { Operator } from './tokens';
+import { MathematicalConstant, Operator } from './tokens';
+import { CalculusRules } from '../../constants/calculus-rules';
 
 export interface IOperator {
 	token: Operator;
@@ -16,6 +17,11 @@ export class Expression {
 		"-": { token: Operator.MINUS, precedence: 1 }
 	};
 
+	private readonly mathematicalConstants: {} = {
+		"e": { token: MathematicalConstant.E, value: Math.E },
+		"pi": { token: MathematicalConstant.PI, value: Math.PI }
+	}
+
 	private readonly leftAssociativity: {} = {
 		"*": 1, "/": 1, "+": 1, "-": 1
 	}
@@ -27,7 +33,7 @@ export class Expression {
 	private outputQueue: Queue<string>;
 	private operatorStack: Stack<string>;
 
-	constructor(private expression: string) {
+	constructor(private expression: string, private variable: string) {
 		this.outputQueue = new Queue<string>();
 		this.operatorStack = new Stack<string>();
 	}
@@ -90,6 +96,11 @@ export class Expression {
 
 					this.outputQueue.enqueue(currentNumber);
 					i += j;
+				}
+				//...else if character is a variable...
+				else if(currentChar === this.variable) {
+					//...treat as number and push to the stack.
+					this.outputQueue.enqueue(currentChar);
 				}
 				//...else if character is an operator
 				else if(currentChar in this.operatorSet) {
