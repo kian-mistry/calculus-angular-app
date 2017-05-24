@@ -21,6 +21,7 @@ import { IntegrationDashboardComponent } from './components/integration/integrat
 import { DifferentiationRulesComponent } from './components/differentiation/differentiation-rules.component';
 import { IntegrationRulesComponent } from './components/integration/integration-rules.component';
 
+import { ExpressionDirective } from './directives/expression.directive';
 import { MathJaxDirective } from './directives/mathjax.directive';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MathJaxDirective } from './directives/mathjax.directive';
 		IntegrationComponent,
 		IntegrationDashboardComponent,
 		IntegrationRulesComponent,
+		ExpressionDirective,
 		MathJaxDirective
 	],
 	imports: [

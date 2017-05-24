@@ -8,7 +8,7 @@
 						<md-option *ngFor="let variable of variables" [value]="variable">{{ variable }}</md-option>
 					</md-select>
 					<md-input-container class="padding-8 full-width" color="accent">
-						<input mdInput #exprString placeholder="Expression">
+						<input mdInput #exprString [expr]="exprString.value" placeholder="Expression">
 					</md-input-container>
 				</section>
 				<section class="flex-item" fxFlex="50%" fxFlex.xs="100%">
