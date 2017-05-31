@@ -48,6 +48,16 @@ export class Expression {
 		return /\d/.test(character);
 	}
 
+	/**
+	 * Checks if character is a lowercase letter.
+	 * 
+	 * @param character Thr character to test.
+	 * @return True if the character is a lowercase letter.
+	 */
+	private isLowercaseLetter(character: string): boolean {
+		return (typeof character != 'undefined') ? /[a-z]/.test(character) : false;
+	}
+
 	private getPrecedence(value: string): number {
 		if(value in this.operatorSet) {
 			return this.operatorSet[value].precedence;
@@ -68,7 +78,7 @@ export class Expression {
 		let result: string = "";
 
 		if(this.expression != null || this.expression != '') {
-			for(let i = 0; i < this.expression.length; i++) {
+			for(let i: number = 0; i < this.expression.length; i++) {
 				//Obtain current character.
 				let currentChar: string = this.expression[i];
 
@@ -80,9 +90,9 @@ export class Expression {
 				//Check if character(s) represents a number. If so add it to the output queue...
 				if(this.isDigit(currentChar)) {
 					let currentNumber: string = currentChar;
-					let j = 0;
+					let j: number = 0;
 					
-					while(true) {
+					while(j <= this.expression.length) {
 						let nextChar: string = this.expression[i + j + 1];
 						if(this.isDigit(nextChar)) {
 							currentNumber = currentNumber + "" + nextChar;
@@ -97,10 +107,37 @@ export class Expression {
 					this.outputQueue.enqueue(currentNumber);
 					i += j;
 				}
-				//...else if character is a variable...
-				else if(currentChar === this.variable) {
-					//...treat as number and push to the stack.
-					this.outputQueue.enqueue(currentChar);
+				//...else if character is a letter...
+				else if(this.isLowercaseLetter(currentChar)) {
+					//Check to see if the current character has other characters following it.
+					let currentName: string = currentChar;
+					let j: number = 0;
+
+					while(j <= this.expression.length) {
+						let nextChar: string = this.expression[i + j + 1];
+						if(this.isLowercaseLetter(nextChar)) {
+							currentName = currentName + "" + nextChar;
+							j++;
+							continue;
+						}
+						else {
+							break;
+						}
+					}
+
+					//Check whether current character is a varaible...
+					if((currentChar === currentName) && (currentChar === this.variable)) {
+						this.outputQueue.enqueue(currentChar);
+					}
+					//...or a mathematical constant...
+					else if(currentName in this.mathematicalConstants) {
+						this.outputQueue.enqueue(currentName);
+					}
+					else {
+						throw "Error: " + currentName + " is not a valid varaible or mathematical constant.";
+					}
+
+					i += j;
 				}
 				//...else if character is an operator
 				else if(currentChar in this.operatorSet) {
