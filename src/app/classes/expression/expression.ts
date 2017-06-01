@@ -1,6 +1,6 @@
 import { Queue, Stack } from 'typescript-collections';
 
-import { MathematicalConstant, Operator } from './tokens';
+import { MathematicalConstant, MathematicalFunction, Operator } from './tokens';
 import { CalculusRules } from '../../constants/calculus-rules';
 
 export interface IOperator {
@@ -10,6 +10,7 @@ export interface IOperator {
 
 export class Expression {
 	private readonly operatorSet: {} = {
+		"fn": { token: Operator.FUNCTION, precedence: 6 },
 		"^": { token: Operator.EXPONENT, precedence: 5 },
 		"*": { token: Operator.MULTIPLY, precedence: 4 },
 		"/": { token: Operator.DIVIDE, precedence: 4 },
@@ -20,22 +21,31 @@ export class Expression {
 	private readonly mathematicalConstants: {} = {
 		"e": { token: MathematicalConstant.E, value: Math.E },
 		"pi": { token: MathematicalConstant.PI, value: Math.PI }
-	}
+	};
+
+	private readonly mathematicalFunctions: {} = {
+		"sin": { token: MathematicalFunction.SIN, fn: Math.sin },
+		"cos": { token: MathematicalFunction.COS, fn: Math.cos },
+		"tan": { token: MathematicalFunction.TAN, fn: Math.tan },
+		"ln": { token: MathematicalFunction.LN, fn: Math.log }
+	};
 
 	private readonly leftAssociativity: {} = {
-		"*": 1, "/": 1, "+": 1, "-": 1
-	}
+		"fn": 1, "*": 1, "/": 1, "+": 1, "-": 1
+	};
 
 	private readonly rightAssociativity: {} = {
 		"^": 1
-	}
+	};
 
 	private outputQueue: Queue<string>;
 	private operatorStack: Stack<string>;
+	private functionStack: Stack<string>;
 
 	constructor(private expression: string, private variable: string) {
 		this.outputQueue = new Queue<string>();
 		this.operatorStack = new Stack<string>();
+		this.functionStack = new Stack<string>();
 	}
 
 	/**
@@ -78,6 +88,7 @@ export class Expression {
 		let result: string = "";
 
 		if(this.expression != null || this.expression != '') {
+			/********** CONVERTING */
 			for(let i: number = 0; i < this.expression.length; i++) {
 				//Obtain current character.
 				let currentChar: string = this.expression[i];
@@ -125,6 +136,8 @@ export class Expression {
 						}
 					}
 
+					i += j;
+
 					//Check whether current character is a varaible...
 					if((currentChar === currentName) && (currentChar === this.variable)) {
 						this.outputQueue.enqueue(currentChar);
@@ -133,11 +146,23 @@ export class Expression {
 					else if(currentName in this.mathematicalConstants) {
 						this.outputQueue.enqueue(currentName);
 					}
+					//...or a mathematical function...
+					else if(currentName in this.mathematicalFunctions) {
+						//Check if the following character is an open parenthesis.
+						let nextChar: string = this.expression[++i];
+						if(nextChar === "(") {
+							this.operatorStack.push("fn");
+							this.operatorStack.push(nextChar);
+							this.functionStack.push(currentName);
+						}
+						else {
+							throw "Error: Missing parenthesis."; 
+						}
+					}
+					//... otherwise throw an error.
 					else {
 						throw "Error: " + currentName + " is not a valid varaible or mathematical constant.";
 					}
-
-					i += j;
 				}
 				//...else if character is an operator
 				else if(currentChar in this.operatorSet) {
@@ -163,12 +188,20 @@ export class Expression {
 					this.operatorStack.push(currentChar);
 				}
 				else if(currentChar === ")") {
-					let foundLeftParenthesis = false;
+					let foundLeftParenthesis: boolean = false;
 
 					while(this.operatorStack.size() != 0) {
-						let currentOp = this.operatorStack.pop();
+						let currentOp: string = this.operatorStack.pop();
 						if(currentOp === "(") {
 							foundLeftParenthesis = true;
+
+							//Check if the previous item in the operator stack is a function.
+							let currentFunc: string = this.operatorStack.peek();
+							if(currentFunc === "fn") {
+								//Remove fn from the stack and push to the output queue.
+								this.outputQueue.enqueue(this.functionStack.pop());
+							}
+
 							break;
 						}
 						else {
@@ -188,6 +221,7 @@ export class Expression {
 				}
 			}
 
+			/********** UNROLLING */
 			while(this.operatorStack.size() != 0) {
 				let currentOp = this.operatorStack.pop();
 				if(currentOp === "(" || currentOp === ")") {
