@@ -16,7 +16,9 @@ export class ExpressionDirective implements OnChanges {
 
 		let expr = new Expression(this.expression, this.selectedVariable);
 		let rpn = expr.shuntingYard();
+		let evaluate = expr.evaluate();
 
 		console.log("RPN: " + rpn);
+		console.log("Eval: " + evaluate);
 	}
 }

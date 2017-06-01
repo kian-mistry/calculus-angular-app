@@ -42,6 +42,11 @@ export class Expression {
 	private operatorStack: Stack<string>;
 	private functionStack: Stack<string>;
 
+	private tokensQueue: Queue<string>;
+	private operandStack: Stack<number>;
+
+	private postFix: string = "";
+
 	constructor(private expression: string, private variable: string) {
 		this.outputQueue = new Queue<string>();
 		this.operatorStack = new Stack<string>();
@@ -56,6 +61,15 @@ export class Expression {
 	 */
 	private isDigit(character: string): boolean {
 		return /\d/.test(character);
+	}
+
+	/**
+	 * Checks if string given is a number.
+	 * @param str The string to test.
+	 * @return True if the string is a number.
+	 */
+	private isNumber(str: string): boolean {
+		return /^\d+$/.test(str);
 	}
 
 	/**
@@ -84,6 +98,30 @@ export class Expression {
 		return this.getPrecedence(opOne) <= this.getPrecedence(opTwo);
 	}
 
+	/**
+	 * Converts an array into a queue.
+	 * 
+	 * @param arr The array to retrieve the data from.
+	 * @return A queue that lists all the data from the array.
+	 */
+	private arrayToQueue<T>(arr: Array<T>): Queue<T> {
+		if(arr.length > 0) {
+			let queue = new Queue<T>();
+
+			for(let i: number = 0; i < arr.length; i++) {
+				queue.enqueue(arr[i]);
+			}
+
+			return queue;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Converts infix notation to postfix notation.
+	 * @return The postfix notation for the expression.
+	 */
 	public shuntingYard(): string {
 		let result: string = "";
 
@@ -234,6 +272,60 @@ export class Expression {
 
 			while(!this.outputQueue.isEmpty()) {
 				result = result + " " + this.outputQueue.dequeue();
+			}
+		}
+
+		this.postFix = result;
+		return result;
+	}
+
+	public evaluate(): string | number {
+		let result: string | number;
+		let tokensArray: Array<string> = this.postFix.split(" ");
+		this.tokensQueue = this.arrayToQueue<string>(tokensArray);
+
+		if(this.tokensQueue != null) {
+			this.operandStack = new Stack<number>();
+
+			while(!this.tokensQueue.isEmpty()) {
+				let currentToken: string = this.tokensQueue.dequeue();
+
+				if(this.isNumber(currentToken)) {
+					this.operandStack.push(parseInt(currentToken));
+				}
+				else if(currentToken in this.operatorSet) {
+					let opTwo: number = this.operandStack.pop();
+					let opOne: number = this.operandStack.pop();
+
+					switch(currentToken) {
+						case "+":
+							this.operandStack.push(opOne + opTwo);
+							break;
+						case "-":
+							this.operandStack.push(opOne - opTwo);
+							break;
+						case "*":
+							this.operandStack.push(opOne * opTwo);
+							break;
+						case "/":
+							if(opTwo == 0) {
+								throw "Error: Division by 0";
+							}
+							else {
+								this.operandStack.push(opOne / opTwo);
+							}
+							break;
+						case "^":
+							this.operandStack.push(Math.pow(opOne, opTwo));
+							break;
+						default:
+							break;
+					}
+				}
+			}
+
+			if(this.operandStack.size() === 1) {
+				result = this.operandStack.pop();
 			}
 		}
 
