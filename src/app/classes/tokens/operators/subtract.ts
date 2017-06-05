@@ -1,4 +1,5 @@
 import { Operator } from './operator';
+import { MathsFn } from '../mathematicalFunctions';
 
 export class Subtract extends Operator {
 
@@ -6,13 +7,13 @@ export class Subtract extends Operator {
 		if(typeof this.operandOne === 'number' && typeof this.operandTwo === 'number') {
 			return this.operandOne - this.operandTwo;
 		}
-		else if(this.operandOne instanceof Operator && typeof this.operandTwo === 'number') {
+		else if(MathsFn.isMathematicalFunction(this.operandOne) && typeof this.operandTwo === 'number') {
 			return <number> this.operandOne.evaluate() - this.operandTwo;
 		}
-		else if(this.operandTwo instanceof Operator && typeof this.operandOne === 'number') {
+		else if(typeof this.operandOne === 'number' && MathsFn.isMathematicalFunction(this.operandTwo)) {
 			return this.operandOne - (<number> this.operandTwo.evaluate());
 		}
-		else if(this.operandOne instanceof Operator && this.operandTwo instanceof Operator) {
+		else if(MathsFn.isMathematicalFunction(this.operandOne) && MathsFn.isMathematicalFunction(this.operandTwo)) {
 			return (<number> this.operandOne.evaluate()) - (<number> this.operandTwo.evaluate());
 		}
 		else {

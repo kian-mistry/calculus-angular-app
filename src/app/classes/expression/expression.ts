@@ -7,6 +7,9 @@ import { Divide } from '../tokens/operators/divide';
 import { Multiply } from '../tokens/operators/multiply';
 import { Power } from '../tokens/operators/exponent';
 import { Subtract } from '../tokens/operators/subtract';
+import { Cosine } from '../tokens/trigonometric_functions/cosine';
+import { Sine } from '../tokens/trigonometric_functions/sine';
+import { Tangent } from '../tokens/trigonometric_functions/tangent';
 import { CalculusRules } from '../../constants/calculus-rules';
 
 export interface IOperator {
@@ -246,6 +249,7 @@ export class Expression {
 							let currentFunc: string = this.operatorStack.peek();
 							if(currentFunc === "fn") {
 								//Remove fn from the stack and push to the output queue.
+								this.operatorStack.pop();
 								this.outputQueue.enqueue(this.functionStack.pop());
 							}
 
@@ -318,6 +322,25 @@ export class Expression {
 							break;
 						case "^":
 							this.operandStack.push(new Power(opOne, opTwo));
+							break;
+						default:
+							break;
+					}
+				}
+				else if(currentToken in this.mathematicalFunctions) {
+					let op: number | IMathematicalFunction = this.operandStack.pop();
+
+					switch(currentToken) {
+						case "sin":
+							this.operandStack.push(new Sine(op));
+							break;
+						case "cos":
+							this.operandStack.push(new Cosine(op));
+							break;
+						case "tan":
+							this.operandStack.push(new Tangent(op));
+							break;
+						case "ln":
 							break;
 						default:
 							break;

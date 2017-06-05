@@ -1,4 +1,5 @@
 import { Operator } from './operator';
+import { MathsFn } from '../mathematicalFunctions';
 
 export class Divide extends Operator {
 
@@ -15,15 +16,15 @@ export class Divide extends Operator {
 		if(typeof this.operandOne === 'number' && typeof this.operandTwo === 'number') {
 			return this.divByZeroCheck(this.operandOne, this.operandTwo);
 		}
-		else if(this.operandOne instanceof Operator && typeof this.operandTwo === 'number') {
+		else if(MathsFn.isMathematicalFunction(this.operandOne) && typeof this.operandTwo === 'number') {
 			let opOne: number = <number> this.operandOne.evaluate();
 			return this.divByZeroCheck(opOne, this.operandTwo);
 		}
-		else if(this.operandTwo instanceof Operator && typeof this.operandOne === 'number') {
+		else if(typeof this.operandOne === 'number' && MathsFn.isMathematicalFunction(this.operandTwo)) {
 			let opTwo: number = <number> this.operandTwo.evaluate();
 			return this.divByZeroCheck(this.operandOne, opTwo);
 		} 
-		else if(this.operandOne instanceof Operator && this.operandTwo instanceof Operator) {
+		else if(MathsFn.isMathematicalFunction(this.operandOne) && MathsFn.isMathematicalFunction(this.operandTwo)) {
 			let opOne: number = <number> this.operandOne.evaluate();
 			let opTwo: number = <number> this.operandTwo.evaluate();
 
