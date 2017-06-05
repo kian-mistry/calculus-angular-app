@@ -11,7 +11,10 @@ export class Multiply extends Operator {
 		}
 		else if(this.operandTwo instanceof Operator && typeof this.operandOne === 'number') {
 			return this.operandOne * (<number> this.operandTwo.evaluate());
-		} 
+		}
+		else if(this.operandOne instanceof Operator && this.operandTwo instanceof Operator) {
+			return (<number> this.operandOne.evaluate()) * (<number> this.operandTwo.evaluate());
+		}
 		else {
 			this.printError();
 			return null;

@@ -12,6 +12,9 @@ export class Power extends Operator {
 		else if(this.operandTwo instanceof Operator && typeof this.operandOne === 'number') {
 			return Math.pow(this.operandOne, (<number> this.operandTwo.evaluate()));
 		}
+		else if(this.operandOne instanceof Operator && this.operandTwo instanceof Operator) {
+			return Math.pow((<number> this.operandOne.evaluate()), (<number> this.operandTwo.evaluate()));
+		}
 		else {
 			this.printError();
 			return null;

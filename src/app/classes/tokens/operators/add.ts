@@ -7,11 +7,14 @@ export class Add extends Operator {
 			return this.operandOne + this.operandTwo;
 		}
 		else if(this.operandOne instanceof Operator && typeof this.operandTwo === 'number') {
-			return <number> this.operandOne.evaluate() + this.operandTwo;
+			return (<number> this.operandOne.evaluate()) + this.operandTwo;
 		}
 		else if(this.operandTwo instanceof Operator && typeof this.operandOne === 'number') {
 			return this.operandOne + (<number> this.operandTwo.evaluate());
-		} 
+		}
+		else if(this.operandOne instanceof Operator && this.operandTwo instanceof Operator) {
+			return (<number> this.operandOne.evaluate()) + (<number> this.operandTwo.evaluate());
+		}
 		else {
 			this.printError();
 			return null;
