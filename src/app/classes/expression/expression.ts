@@ -235,9 +235,12 @@ export class Expression {
 					let foundLeftParenthesis: boolean = false;
 
 					while(this.operatorStack.size() != 0) {
-						let currentOp: string = this.operatorStack.pop();
+						let currentOp: string = this.operatorStack.peek();
 						if(currentOp === "(") {
 							foundLeftParenthesis = true;
+
+							//Remove ( from the stack but do not push to the output queue.
+							this.operatorStack.pop();
 
 							//Check if the previous item in the operator stack is a function.
 							let currentFunc: string = this.operatorStack.peek();
@@ -249,16 +252,13 @@ export class Expression {
 							break;
 						}
 						else {
-							this.outputQueue.enqueue(currentOp);
+							this.outputQueue.enqueue(this.operatorStack.pop());
 						}
 					}
 
 					if(!foundLeftParenthesis) {
 						throw "Error: Parenthesis mismatched!";
 					}
-
-					//Remove ( from the stack but do not push to the output queue.
-					this.operatorStack.pop();
 				}
 				else {
 					throw "Error: Unknown character - " + currentChar;
