@@ -1,6 +1,12 @@
 import { Queue, Stack } from 'typescript-collections';
 
 import { MathematicalConstant, MathematicalFunction, Operator } from './tokens';
+import { IMathematicalFunction } from '../tokens/mathematicalFunctions';
+import { Add } from '../tokens/operators/add';
+import { Divide } from '../tokens/operators/divide';
+import { Multiply } from '../tokens/operators/multiply';
+import { Power } from '../tokens/operators/exponent';
+import { Subtract } from '../tokens/operators/subtract';
 import { CalculusRules } from '../../constants/calculus-rules';
 
 export interface IOperator {
@@ -43,7 +49,7 @@ export class Expression {
 	private functionStack: Stack<string>;
 
 	private tokensQueue: Queue<string>;
-	private operandStack: Stack<number>;
+	private operandStack: Stack<number | IMathematicalFunction>;
 
 	private postFix: string = "";
 
@@ -285,7 +291,7 @@ export class Expression {
 		this.tokensQueue = this.arrayToQueue<string>(tokensArray);
 
 		if(this.tokensQueue != null) {
-			this.operandStack = new Stack<number>();
+			this.operandStack = new Stack<number | IMathematicalFunction>();
 
 			while(!this.tokensQueue.isEmpty()) {
 				let currentToken: string = this.tokensQueue.dequeue();
@@ -294,29 +300,24 @@ export class Expression {
 					this.operandStack.push(parseInt(currentToken));
 				}
 				else if(currentToken in this.operatorSet) {
-					let opTwo: number = this.operandStack.pop();
-					let opOne: number = this.operandStack.pop();
+					let opTwo: number | IMathematicalFunction = this.operandStack.pop();
+					let opOne: number | IMathematicalFunction = this.operandStack.pop();
 
 					switch(currentToken) {
 						case "+":
-							this.operandStack.push(opOne + opTwo);
+							this.operandStack.push(new Add(opOne, opTwo));
 							break;
 						case "-":
-							this.operandStack.push(opOne - opTwo);
+							this.operandStack.push(new Subtract(opOne, opTwo));
 							break;
 						case "*":
-							this.operandStack.push(opOne * opTwo);
+							this.operandStack.push(new Multiply(opOne, opTwo));
 							break;
 						case "/":
-							if(opTwo == 0) {
-								throw "Error: Division by 0";
-							}
-							else {
-								this.operandStack.push(opOne / opTwo);
-							}
+							this.operandStack.push(new Divide(opOne, opTwo));
 							break;
 						case "^":
-							this.operandStack.push(Math.pow(opOne, opTwo));
+							this.operandStack.push(new Power(opOne, opTwo));
 							break;
 						default:
 							break;
@@ -325,7 +326,8 @@ export class Expression {
 			}
 
 			if(this.operandStack.size() === 1) {
-				result = this.operandStack.pop();
+				let token: IMathematicalFunction = <IMathematicalFunction> this.operandStack.pop();
+				result = token.evaluate();
 			}
 		}
 
