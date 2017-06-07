@@ -5,7 +5,7 @@ import { IMathematicalFunction } from '../tokens/mathematicalFunctions';
 import { Add } from '../tokens/operators/add';
 import { Divide } from '../tokens/operators/divide';
 import { Multiply } from '../tokens/operators/multiply';
-import { Power } from '../tokens/operators/exponent';
+import { Power } from '../tokens/operators/power';
 import { Subtract } from '../tokens/operators/subtract';
 import { Cosine } from '../tokens/trigonometric_functions/cosine';
 import { Sine } from '../tokens/trigonometric_functions/sine';
