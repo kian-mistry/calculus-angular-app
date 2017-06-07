@@ -10,6 +10,7 @@ import { Subtract } from '../tokens/operators/subtract';
 import { Cosine } from '../tokens/trigonometric_functions/cosine';
 import { Sine } from '../tokens/trigonometric_functions/sine';
 import { Tangent } from '../tokens/trigonometric_functions/tangent';
+import { NaturalLog } from '../tokens/exponentials/logarithm';
 import { CalculusRules } from '../../constants/calculus-rules';
 
 export interface IOperator {
@@ -341,6 +342,7 @@ export class Expression {
 							this.operandStack.push(new Tangent(op));
 							break;
 						case "ln":
+							this.operandStack.push(new NaturalLog(op));
 							break;
 						default:
 							break;
