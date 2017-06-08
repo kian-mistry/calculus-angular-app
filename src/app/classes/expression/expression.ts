@@ -11,7 +11,6 @@ import { Cosine } from '../tokens/trigonometric_functions/cosine';
 import { Sine } from '../tokens/trigonometric_functions/sine';
 import { Tangent } from '../tokens/trigonometric_functions/tangent';
 import { NaturalLog } from '../tokens/exponentials/logarithm';
-import { CalculusRules } from '../../constants/calculus-rules';
 
 export interface IOperator {
 	token: Operator;
@@ -347,6 +346,9 @@ export class Expression {
 						default:
 							break;
 					}
+				}
+				else if (currentToken in this.mathematicalConstants) {
+					this.operandStack.push(this.mathematicalConstants[currentToken].value);
 				}
 			}
 
