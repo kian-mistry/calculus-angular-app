@@ -18,7 +18,7 @@ export class Cosine extends TrigonometricFunction {
 		}
 
 		if(op !== null) {
-			if(op % ((1/2) * Math.PI) === 0) {
+			if((op !== 0) && (op % ((1/2) * Math.PI) === 0)) {
 				return 0;
 			}
 			else {
