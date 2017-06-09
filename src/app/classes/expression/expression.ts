@@ -289,7 +289,11 @@ export class Expression {
 		return result;
 	}
 
-	public evaluate(): string | number {
+	/**
+	 * Evaluates the expression.
+	 * @param x The variable x of a mathematical function. => f(x).
+	 */
+	public evaluate(x?: number): string | number {
 		let result: string | number;
 		let tokensArray: Array<string> = this.postFix.split(" ");
 		this.tokensQueue = this.arrayToQueue<string>(tokensArray);
@@ -302,6 +306,14 @@ export class Expression {
 
 				if(this.isNumber(currentToken)) {
 					this.operandStack.push(parseInt(currentToken));
+				}
+				else if(currentToken === this.variable) {
+					if(x !== null) {
+						this.operandStack.push(x);
+					}
+					else {
+						throw new Error("Error: x has not been given a value in f(x).");
+					}
 				}
 				else if(currentToken in this.operatorSet) {
 					let opTwo: number | IMathematicalFunction = this.operandStack.pop();
