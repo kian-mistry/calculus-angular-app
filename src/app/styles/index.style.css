@@ -20,7 +20,6 @@
 .graph {
 	width: 100%;
 	height: calc(50vh - 32px) !important;
-	background-color: red;
 }
 
 /* Allow to scroll through content on the tab body. */

@@ -10,6 +10,12 @@
 					<md-input-container class="padding-8 full-width" color="accent">
 						<input mdInput #exprString [expr]="exprString.value" [var]="selectedVariable" placeholder="Expression">
 					</md-input-container>
+					<button md-raised-button 
+						color="accent"
+						[disabled]="exprString.value == ''"
+						(click)="evaluate(exprString.value)">
+							{{ 'Evaluate' | uppercase }}
+					</button>
 				</section>
 				<section class="flex-item" fxFlex="50%" fxFlex.xs="100%">
 					<div class="padding-8 full-width">
@@ -23,7 +29,12 @@
 		<md-card>
 			<md-card-title>Graph</md-card-title>
 			<md-card-content>
-				<canvas class="graph"></canvas>
+				<canvas baseChart class="graph"
+					[datasets]="graphDatasets"
+					[labels]="graphLabels"
+					[options]="graphOptions"
+					[chartType]="'line'">
+				</canvas>
 			</md-card-content>
 		</md-card>
 	</div>

@@ -22,7 +22,9 @@
 				"app/styles/index.style.scss",
 				"app/styles/material.theme.scss"
 			],
-			"scripts": [],
+			"scripts": [
+				"../node_modules/chart.js/dist/Chart.min.js"
+			],
 			"environmentSource": "environments/environments.ts",
 			"environments": {
 				"dev": "environments/environment.ts",

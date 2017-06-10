@@ -10,6 +10,8 @@ import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 import { AppComponent } from './components/app.component';
 import { HomeComponent } from './components/home.component';
 import { DifferentiationComponent } from './components/differentiation.component';
@@ -41,6 +43,7 @@ import { MathJaxDirective } from './directives/mathjax.directive';
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		BrowserModule,
+		ChartsModule,
 		FlexLayoutModule,
 		FormsModule,
 		HttpModule,
