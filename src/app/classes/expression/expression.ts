@@ -128,6 +128,19 @@ export class Expression {
 	}
 
 	/**
+	 * Inserts a string into a string.
+	 * 
+	 * @param index The location where the new string is to be inserted.
+	 * @param currentString The string to be amended.
+	 * @param newString The value to be inserted into the string.
+	 * 
+	 * @return A new string with the inserted value.
+	 */
+	private splice(index: number, currentString: string, newString): string {
+		return currentString.slice(0, index) + newString + currentString.slice(index);
+	}
+
+	/**
 	 * Converts infix notation to postfix notation.
 	 * @return The postfix notation for the expression.
 	 */
@@ -156,6 +169,12 @@ export class Expression {
 							currentNumber = currentNumber + "" + nextChar;
 							j++;
 							continue;
+						}
+						else if(nextChar === this.variable) {
+							//Converts expressions such as 4x into 4 * x.
+							this.expression = this.splice(i + j + 1, this.expression, " * ");
+							j++
+							break;
 						}
 						else {
 							break;
