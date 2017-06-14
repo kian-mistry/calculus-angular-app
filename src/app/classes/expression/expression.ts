@@ -1,6 +1,8 @@
 import { Queue, Stack } from 'typescript-collections';
 
 import { MathematicalConstant, MathematicalFunction, Operator } from './tokens';
+import { Differentiation } from './differentiation';
+import { Helper } from '../helper';
 import { IMathematicalFunction } from '../tokens/mathematicalFunctions';
 import { Add } from '../tokens/operators/add';
 import { Divide } from '../tokens/operators/divide';
@@ -108,39 +110,6 @@ export class Expression {
 	}
 
 	/**
-	 * Converts an array into a queue.
-	 * 
-	 * @param arr The array to retrieve the data from.
-	 * @return A queue that lists all the data from the array.
-	 */
-	private arrayToQueue<T>(arr: Array<T>): Queue<T> {
-		if(arr.length > 0) {
-			let queue = new Queue<T>();
-
-			for(let i: number = 0; i < arr.length; i++) {
-				queue.enqueue(arr[i]);
-			}
-
-			return queue;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Inserts a string into a string.
-	 * 
-	 * @param index The location where the new string is to be inserted.
-	 * @param currentString The string to be amended.
-	 * @param newString The value to be inserted into the string.
-	 * 
-	 * @return A new string with the inserted value.
-	 */
-	private splice(index: number, currentString: string, newString): string {
-		return currentString.slice(0, index) + newString + currentString.slice(index);
-	}
-
-	/**
 	 * Converts infix notation to postfix notation.
 	 * @return The postfix notation for the expression.
 	 */
@@ -172,7 +141,7 @@ export class Expression {
 						}
 						else if(nextChar === this.variable) {
 							//Converts expressions such as 4x into 4 * x.
-							this.expression = this.splice(i + j + 1, this.expression, " * ");
+							this.expression = Helper.splice(i + j + 1, this.expression, " * ");
 							j++
 							break;
 						}
@@ -315,7 +284,7 @@ export class Expression {
 	public evaluate(x?: number): string | number {
 		let result: string | number;
 		let tokensArray: Array<string> = this.postFix.split(" ");
-		this.tokensQueue = this.arrayToQueue<string>(tokensArray);
+		this.tokensQueue = Helper.arrayToQueue<string>(tokensArray);
 
 		if(this.tokensQueue != null) {
 			this.operandStack = new Stack<number | IMathematicalFunction>();
