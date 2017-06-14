@@ -8,6 +8,10 @@ import { CalculusRules } from '../../constants/calculus-rules';
 	templateUrl: '../../templates/differentiation/differentiation-dash.template.html'
 })
 export class DifferentiationDashboardComponent {
+	private readonly MIN_X_AXIS: number = -5;
+	private readonly MAX_X_AXIS: number = 5;
+	private readonly DX: number = 0.1;
+
 	public variables: string[] = CalculusRules.variables;
 	public selectedVariable: string = 'x';
 
@@ -42,28 +46,54 @@ export class DifferentiationDashboardComponent {
 	public graphLabels = [];
 
 	/**
+	 * Sets the minimum tick value of the y-axis from an array of numbers.
+	 * @param d The array of numbers.
+	 */
+	private setMinYAxis(d: Array<number>) {
+		let min = Math.min(...d);
+		let minFloor = Math.floor(min);
+
+		this.graphOptions["scales"].yAxes[0].ticks.min = minFloor;
+	}
+
+	/**
+	 * Sets the maximum tick value of the y-axis from an array of numbers.
+	 * @param d The array of numbers.
+	 */
+	private setMaxYAxis(d: Array<number>) {
+		let max = Math.max(...d);
+		let maxCeil = Math.ceil(max);
+
+		this.graphOptions["scales"].yAxes[0].ticks.max = maxCeil;
+	}
+
+	/**
 	 * Evaluates given expression with respect to x and plots on the graph.
 	 * @param exprString The expression to be plotted on the graph.
 	 */
 	public evaluate(exprString: string): void {
-		let MAX_X_AXIS: number = 5;
-		let DX: number = 0.1;
-
 		this.graphDatasets[0].data = new Array();
 		this.graphLabels = new Array();
 
 		let expr = new Expression(exprString, this.selectedVariable);
 		expr.shuntingYard();
 
-		let i: number = -5;
-		while(i <= MAX_X_AXIS) {
+		let i: number = this.MIN_X_AXIS;
+		while(i <= this.MAX_X_AXIS) {
 			let ans = expr.evaluate(i);
 
 			this.graphDatasets[0].data.push((<number> ans).toFixed(3));
 			this.graphLabels.push(i + "");
 
-			i += DX;
+			i += this.DX;
 			i = parseFloat(i.toFixed(1));
 		}
+
+		let filteredData = this.graphDatasets[0].data.filter((x) => {
+			return (x == undefined || isNaN(x) || !isFinite(x)) ? 0 : x;
+		});
+
+		this.setMinYAxis(filteredData);
+		this.setMaxYAxis(filteredData);
 	}
 }
